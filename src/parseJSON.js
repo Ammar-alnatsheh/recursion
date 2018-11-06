@@ -3,68 +3,80 @@
 
 // but you're not, so you'll write it from scratch:
 var parseJSON = function(json) {
-  var obj = {};
-  var attribute = getAttribute(json);
+  
+  //test if its an objedct or array
+  if(json[1] === '[' && json[json.length-2] === ']'){
+    //json is an array
+    return parseArray(json);
+    
+  }else if(json[1] === '{' && json[json.length-2] === '}'){
+    //json is an object
+    return parseObj(json);
+    
+  }else{
+    // wrong input throw error
+    throw "bad input";
+  }
+  
+  
+}
 
-  for (var i = 0; i < attribute.length; i++){
-    var key = attribute[i][0];
-    var value = attribute[i][1]
+function parseObj(obj){
+  
+  
+}
 
+function parseArray(arr){
+  var result = [];
+  var values =[];
+  
+  // clean the arr string by removing the brackets  "[ ... ]"
+  arr = arr.slice(1,arr.length-1);
+  
+  // find value by , with nested objects
+  
+  
+  
+  
+  
+}
+
+function valueType(value)
+{
     if(value[0] === '{' && value[value.length-1] === '}'){
-      // value is an object
-      obj[key] = parseJSON(value);
+      // value is an object if first and last index is {}
+      return parseJSON(value);
 
     }else if (value[0] === '[' && value[value.length-1] === ']') {
-      // value is an array
-      obj[key] = makeArray(value);
+      // value is an array if first and last index is []
+      return parseJSON(value);
 
     }else if(Number(value)){
       // value is a number
-      obj[key] = Number(value);
+      return Number(value);
 
     }else if (value === 'true') {
       // value is boolean => true
-      obj[key] = true;
+      return true;
 
     }else if (value === 'false') {
       // value is boolean => false
-      obj[key] = false;
+      return false;
 
     }else if (value === 'null') {
       // value is null
-      obj[key] = null;
+      return = null;
 
     }else {
       // value is a string
-      obj[key] = value;
+      return value;
     }
 
   }
 
-  return obj;
-}
-
-var getAttribute = function(value){
-  value = json.slice(1,json.length-1);
-
-}
-
-var makeArray = function(value){
-  var result = [];
-
-  obj.forEach(function(element, i) {
-    result += stringifyJSON(element) + ',';
-  });
-
-  return result;
-
-
-}
 
 /*
-
 In JSON, values must be one of the following data types:
-
 a string
 a number
 an object (JSON object)
